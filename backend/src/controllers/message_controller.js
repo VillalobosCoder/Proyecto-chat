@@ -1,31 +1,34 @@
-const messageModel = require("../models/message_model");
+import Messages from "../models/message_model.js";
 
 export const addMessage = async (req, res) => {
   try {
     const { from, to, message } = req.body;
-    const data = await messageModel.create({
-      message: {text: message},
+    const data = await Messages.create({
+      message: { text: message },
       users: [from, to],
       sender: from,
     });
 
-    if (data) return res.json({
+    if (data) {
+      return res.json({
         msg: "Mensaje enviado",
-    });
+      });
+    }
 
     return res.json({
       msg: "Error al enviar el mensaje",
     });
-
   } catch (error) {
     console.log(error);
   }
 };
 
+
+
 export const getAllMessages = async (req, res) => {
     try {
         const { from, to } = req.body;
-        const messages = await messageModel.find({
+        const messages = await Messages.find({
             users: { $all: [from, to] },
         }).sort({ updateAt: 1 });
 
@@ -35,6 +38,7 @@ export const getAllMessages = async (req, res) => {
                 message: message.message.text,
             }
         });
+        res.json(projectMessages);
     } catch (error) {
         console.log(error);
     }

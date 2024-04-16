@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
       console.log(res);
       setUser(res.data);
       setIsAuthenticated(true);
+      localStorage.setItem('chat-app-user', JSON.stringify(res.data));
     } catch (error) {
       setErrors(error.response.data);
     }
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }) => {
       console.log(res);
       setIsAuthenticated(true);
       setUser(res.data);
+      localStorage.setItem('chat-app-user', JSON.stringify(res.data));
     } catch (error) {
       setErrors(error.response.data);
     }
