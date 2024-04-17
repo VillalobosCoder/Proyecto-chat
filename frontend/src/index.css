@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.contacts-list-container {
+    max-height: 70dvh;
+    min-height: 70dvh; 
+  }
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent; 
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #3b82f6; 
+    border-radius: 5px; 
+  }
+
+  * {
+    scrollbar-color: #3b82f6 transparent;
+  }
+  
+  

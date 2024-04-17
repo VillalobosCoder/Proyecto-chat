@@ -13,9 +13,10 @@ function InputChat({ handleSendMsg }) {
   };
 
   return (
-    <div>
-      <form onSubmit={(e) => sendChat(e)}>
+    <div className=" h-14 flex items-center">
+      <form onSubmit={(e) => sendChat(e)} className="flex w-full">
         <input
+          className="w-full h-12 bg-zinc-800 p-2 rounded-l-2xl text-white"
           type="text"
           placeholder="Mensaje"
           value={msg}
@@ -23,8 +24,8 @@ function InputChat({ handleSendMsg }) {
             setMsg(e.target.value);
           }}
         />
-        <button type="submit" className="">
-          <IoMdSend />
+        <button type="submit" className="bg-blue-500 h-12 w-12 rounded-r-2xl flex items-center justify-center">
+          <IoMdSend className="text-white" />
         </button>
       </form>
     </div>

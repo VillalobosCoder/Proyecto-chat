@@ -17,17 +17,16 @@ function ContainerChat({ currentChat, currentUser, socket }) {
         setMessages(response.data);
       }
     };
-    fetchData();
+    fetchData();  
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    console.log(currentChat);
     await axios.post("/addmsg", {
       from: currentUser.id,
       to: currentChat._id,
       message: msg,
     });
-    socket.current.emit("send-msg", { 
+    socket.current.emit("send-msg", {
       to: currentChat._id,
       from: currentUser.id,
       message: msg,
@@ -61,23 +60,33 @@ function ContainerChat({ currentChat, currentUser, socket }) {
   }, [messages]);
 
   return (
-    <div>
-      <h1>
-        <div>
-          {messages.map((message, index) => {
-            return (
-              <div ref={scrollRef} key={index}>
-                <div>
-                  <div>
-                    <p>{message.message}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <InputChat  handleSendMsg={handleSendMsg}/>
-      </h1>
+    <div className=" h-screen flex flex-col p-3">
+      <div className="bg-zinc-800 text-white p-4 rounded-xl text-lg font-bold">
+        {currentChat && <h1>{currentChat.username}</h1>}
+      </div>
+      <div className="overflow-y-auto flex-grow bg-zinc-800 rounded-xl mt-2 mb-2 text-white">
+        {messages.map((message, index) => (
+          <div
+            className={`flex ${
+              message.fromSelf ? "justify-end" : "justify-start"
+            } m-3`}
+            key={index}
+          >
+            <div
+              className={`p-2 ${
+                message.fromSelf
+                  ? "bg-blue-500 p-2 rounded-xl w-2/6"
+                  : "bg-sky-700 p-2 rounded-xl w-2/6"
+              }`}
+              style={{ wordWrap: "break-word" }}
+            >
+              <p>{message.message}</p>
+            </div>
+          </div>
+        ))}
+        <div ref={scrollRef} />
+      </div>
+      <InputChat handleSendMsg={handleSendMsg} />
     </div>
   );
 }

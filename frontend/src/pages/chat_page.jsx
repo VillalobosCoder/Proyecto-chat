@@ -16,10 +16,6 @@ function ChatPage() {
   useEffect(() => {
     const CU = async () => {
       setCurrentUser(await JSON.parse(localStorage.getItem("chat-app-user")));
-      console.log(
-        await JSON.parse(localStorage.getItem("chat-app-user")),
-        "current user"
-      );
       setIsLoaded(true);
     };
     CU();
@@ -42,34 +38,38 @@ function ChatPage() {
         const id = decodeJWT(token);
         const res = await getAllUsers(id);
         setContacts(res.data);
-        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
     }
-
     getCurrentUser();
   }, [currentUser]);
+
   const handleChatChange = (chat) => {
-    
     setCurrentChat(chat);
   };
+
   return (
-    <div className="bg-zinc-300 w-screen h-screen">
-      <ContactsChat
-        contacts={contacts}
-        currentUser={currentUser}
-        changeChat={handleChatChange}
-      />
-      {isLoaded && currentChat === undefined ? (
-        <WelcomeChat currentUser={currentUser} />
-      ) : (
-        <ContainerChat
-          currentChat={currentChat}
-          socket={socket}
+    <div className="bg-zinc-300 flex">
+      <div className="w-1/4 flex-grow-0">
+
+        <ContactsChat
+          contacts={contacts}
           currentUser={currentUser}
+          changeChat={handleChatChange}
         />
-      )}
+      </div>
+      <div className="w-3/4 flex-grow">
+        {isLoaded && currentChat === undefined ? (
+          <WelcomeChat currentUser={currentUser} />
+        ) : (
+          <ContainerChat
+            currentChat={currentChat}
+            socket={socket}
+            currentUser={currentUser}
+          />
+        )}
+      </div>
     </div>
   );
 }

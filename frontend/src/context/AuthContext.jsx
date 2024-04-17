@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
   const singup = async (user) => {
     try {
       const res = await registerRequest(user);
-      console.log(res);
       setUser(res.data);
       setIsAuthenticated(true);
       localStorage.setItem('chat-app-user', JSON.stringify(res.data));
@@ -29,11 +28,17 @@ export const AuthProvider = ({ children }) => {
       setErrors(error.response.data);
     }
   };
+  const logout = async () => {
+    await logoutRequest();
+    setUser(null);
+    setIsAuthenticated(false);
+    Cookies.remove('token');
+    localStorage.clear();
+  };
 
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
-      console.log(res);
       setIsAuthenticated(true);
       setUser(res.data);
       localStorage.setItem('chat-app-user', JSON.stringify(res.data));
@@ -80,9 +85,11 @@ export const AuthProvider = ({ children }) => {
     checkLogin();
   }, []);
 
+
+
   return (
     <AuthContext.Provider
-      value={{ singup, signin, loading, user, isAuthenticated, errors }}
+      value={{ singup, signin, logout , loading, user, isAuthenticated, errors }}
     >
       {children}
     </AuthContext.Provider>

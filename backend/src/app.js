@@ -33,16 +33,13 @@ global.onlineUsers =  new Map();
 io.on("connection", (socket) => {
     console.log("Conectado al chat");
     global.chatSocket = socket;
-    console.log("chatSocket", global.onlineUsers);
     socket.on("add-user",(userId)=>{
         onlineUsers.set(userId,socket.id);
     });
 
     socket.on("send-msg",(data)=>{
         const sendUserSocket = onlineUsers.get(data.to);
-        console.log("enviado", sendUserSocket);
         if(sendUserSocket) {
-            console.log("recibido", data.message);
             socket.to(sendUserSocket).emit("msg-recieved",data.message);
   
         }
