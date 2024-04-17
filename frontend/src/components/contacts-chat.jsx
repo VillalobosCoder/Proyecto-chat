@@ -13,14 +13,6 @@ function ContactsChat({ contacts, currentUser, changeChat }) {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
-  useEffect(() => {
-    urlToBase64(reactlogo)
-      .then((data) => {
-        console.log(data);
-        setCurrentUserImage(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -37,6 +29,9 @@ function ContactsChat({ contacts, currentUser, changeChat }) {
     logout();
   };
 
+  const handleChangePicture = () => {
+    navigate("/picture");
+  };
   return (
     <div>
       {currentUserName && (
@@ -46,7 +41,10 @@ function ContactsChat({ contacts, currentUser, changeChat }) {
             id="usuario"
           >
             <div className="flex items-center">
-              <PerfilePicChat base64={currentUserImage} />
+              <div className="hover:blur-sm"onClick={handleChangePicture}>
+                <PerfilePicChat base64={currentUser.userPic} />
+              </div>
+
               <h2 className="text-white font-bold text-lg ml-4">
                 {currentUserName}
               </h2>

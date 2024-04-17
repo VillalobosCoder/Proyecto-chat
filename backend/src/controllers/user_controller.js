@@ -15,3 +15,13 @@ export const getAllUsers = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+
+export const setPicture = async (req, res) => {
+    try {
+        console.log(req.body);
+        const user = await User.findByIdAndUpdate(req.params.id, { userPic: req.body.picture }, { new: true });
+        return res.json(user);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};

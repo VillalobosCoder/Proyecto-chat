@@ -53,6 +53,7 @@ export const login = async (req, res) => {
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
+      userPic: userFound.userPic,
       createdAt: userFound.createdAt,
       updatedAt: userFound.updatedAt,
     });

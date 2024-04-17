@@ -26,6 +26,7 @@ function ChatPage() {
       socket.current = io("http://localhost:4000");
       socket.current.emit("add-user", currentUser.id);
     }
+    console.log("Current user", currentUser);
   }, [currentUser]);
 
   useEffect(() => {
