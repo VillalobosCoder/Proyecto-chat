@@ -51,7 +51,7 @@ function ChatPage() {
   };
 
   return (
-    <div className="bg-zinc-300 flex">
+    <div className="bg-zinc-700 flex">
       <div className="w-1/4 flex-grow-0">
 
         <ContactsChat

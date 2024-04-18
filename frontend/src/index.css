@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .contacts-list-container {
-    max-height: 70dvh;
-    min-height: 70dvh; 
+    max-height: 75dvh;
+    min-height: 75dvh; 
   }
 
 ::-webkit-scrollbar {

@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { TbLogout2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { urlToBase64 } from "../secure/base64";
-import reactlogo from "../assets/reactlogo.png";
 import { PerfilePicChat } from "./perfile-pic-chat";
 
 function ContactsChat({ contacts, currentUser, changeChat }) {
@@ -12,7 +10,6 @@ function ContactsChat({ contacts, currentUser, changeChat }) {
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const navigate = useNavigate();
   const { logout } = useAuth();
-
 
   useEffect(() => {
     if (currentUser) {
@@ -41,7 +38,7 @@ function ContactsChat({ contacts, currentUser, changeChat }) {
             id="usuario"
           >
             <div className="flex items-center">
-              <div className="hover:blur-sm"onClick={handleChangePicture}>
+              <div className="hover:blur-sm" onClick={handleChangePicture}>
                 <PerfilePicChat base64={currentUser.userPic} />
               </div>
 
@@ -57,11 +54,6 @@ function ContactsChat({ contacts, currentUser, changeChat }) {
             </div>
           </div>
           <section className="ml-2 bg-zinc-800 rounded-xl pt-4 pb-4">
-            <div className="justify-center">
-              <h1 className="text-xl font-ligh text-white text-center">
-                Contactos
-              </h1>
-            </div>
             <div className="m-4 contacts-list-container overflow-y-auto">
               {contacts.map((contact, index) => (
                 <div
@@ -71,8 +63,9 @@ function ContactsChat({ contacts, currentUser, changeChat }) {
                   key={contact._id}
                   onClick={() => handleChatChange(index, contact)}
                 >
-                  <div>
-                    <h3>{contact.username}</h3>
+                  <div className="flex items-center">
+                    <PerfilePicChat base64={contact.userPic} />
+                    <h3 className="ml-3">{contact.username}</h3>
                   </div>
                 </div>
               ))}

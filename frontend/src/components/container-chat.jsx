@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import InputChat from "./input-chat";
 import axios from "../api/axios";
+import { PerfilePicChat } from "./perfile-pic-chat";
 
 function ContainerChat({ currentChat, currentUser, socket }) {
   const [messages, setMessages] = useState([]);
@@ -17,7 +18,7 @@ function ContainerChat({ currentChat, currentUser, socket }) {
         setMessages(response.data);
       }
     };
-    fetchData();  
+    fetchData();
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
@@ -62,7 +63,12 @@ function ContainerChat({ currentChat, currentUser, socket }) {
   return (
     <div className=" h-screen flex flex-col p-3">
       <div className="bg-zinc-800 text-white p-4 rounded-xl text-lg font-bold">
-        {currentChat && <h1>{currentChat.username}</h1>}
+        {currentChat && (
+          <div className="flex items-center">
+            <PerfilePicChat base64={currentChat.userPic} />
+            <h1 className="ml-4">{currentChat.username}</h1>
+          </div>
+        )}
       </div>
       <div className="overflow-y-auto flex-grow bg-zinc-800 rounded-xl mt-2 mb-2 text-white">
         {messages.map((message, index) => (
