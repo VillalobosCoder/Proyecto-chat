@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { urlToBase64 } from "../secure/base64";
 import { MdFileUpload } from "react-icons/md";
 import { setPicture } from "../api/users";
+import { useNavigate } from "react-router-dom";
 
 function PicturePage() {
   const [imageBase64, setImageBase64] = useState(null);
   const [currentUser, setCurrentUser] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const CU = async () => {
-      setCurrentUser(await JSON.parse(localStorage.getItem("chat-app-user")));
+      setCurrentUser(await JSON.parse(localStorage.getItem("usuario")));
       setIsLoaded(true);
     };
     CU();
@@ -25,18 +27,15 @@ function PicturePage() {
     }
   };
 
-  const handleUpdatePicture = () => {
-    async function updatePicture() {
-      try {
-        await setPicture(currentUser.id, {
-          picture: imageBase64,
-        });
-      } catch (error) {
-        console.log(error);
-      }
+  const handleUpdatePicture = async () => {
+    try {
+      await setPicture(currentUser.id, {
+        picture: imageBase64,
+      });
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
     }
-    updatePicture();
-    console.log("Picture updated", currentUser.id, imageBase64);
   };
 
   return (
@@ -63,7 +62,10 @@ function PicturePage() {
             <div className="w-full h-full bg-zinc-600 rounded-xl"></div>
           )}
         </div>
-        <button className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={handleUpdatePicture}>
+        <button
+          className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
+          onClick={handleUpdatePicture}
+        >
           Actualizar foto
         </button>
       </div>

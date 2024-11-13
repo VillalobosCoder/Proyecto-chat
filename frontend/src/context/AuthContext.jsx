@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       const res = await registerRequest(user);
       setUser(res.data);
       setIsAuthenticated(true);
-      localStorage.setItem('chat-app-user', JSON.stringify(res.data));
+      localStorage.setItem('usuario', JSON.stringify(res.data));
     } catch (error) {
       setErrors(error.response.data);
     }
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       const res = await loginRequest(user);
       setIsAuthenticated(true);
       setUser(res.data);
-      localStorage.setItem('chat-app-user', JSON.stringify(res.data));
+      localStorage.setItem('usuario', JSON.stringify(res.data));
     } catch (error) {
       setErrors(error.response.data);
     }

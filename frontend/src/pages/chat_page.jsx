@@ -15,7 +15,7 @@ function ChatPage() {
 
   useEffect(() => {
     const CU = async () => {
-      setCurrentUser(await JSON.parse(localStorage.getItem("chat-app-user")));
+      setCurrentUser(await JSON.parse(localStorage.getItem("usuario")));
       setIsLoaded(true);
     };
     CU();
@@ -24,9 +24,8 @@ function ChatPage() {
   useEffect(() => {
     if (currentUser) {
       socket.current = io("http://localhost:4000");
-      socket.current.emit("add-user", currentUser.id);
+      socket.current.emit("agregarUsuario", currentUser.id);
     }
-    console.log("Current user", currentUser);
   }, [currentUser]);
 
   useEffect(() => {
